@@ -1,6 +1,6 @@
-/// Support for doing something awesome.
+/// Library to implement English written numerals in pure dart with null safety
 ///
-/// More dartdocs go here.
+/// Built using rules on [wikipedia](https://en.wikipedia.org/wiki/English_numerals)
 library english_numerals;
 
 export 'src/english_numerals_base.dart';
