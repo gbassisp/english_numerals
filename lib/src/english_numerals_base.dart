@@ -53,6 +53,11 @@ class Cardinal {
       return "${Cardinal(number ~/ 100)} hundred";
     }
 
+    // perfect thousands
+    if (number >= 1000 && number < 1000000 && number % 1000 == 0) {
+      return "${Cardinal(number ~/ 1000)} thousand";
+    }
+
     return "";
   }
 

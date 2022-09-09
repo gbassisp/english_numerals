@@ -71,5 +71,21 @@ void main() {
         expect(Cardinal(k).toString(), hundreds[k]);
       }
     });
+    test('perfect thousands', () {
+      final thousands = {
+        1000: "one thousand",
+        2000: "two thousand",
+        10000: "ten thousand",
+        11000: "eleven thousand",
+        20000: "twenty thousand",
+        21000: "twenty-one thousand",
+        30000: "thirty thousand",
+        85000: "eighty-five thousand",
+        100000: "one hundred thousand",
+      };
+      for (var k in thousands.keys) {
+        expect(Cardinal(k).toString(), thousands[k]);
+      }
+    });
   });
 }
