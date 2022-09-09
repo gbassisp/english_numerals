@@ -58,6 +58,10 @@ class Cardinal {
       return "${Cardinal(number ~/ 1000)} thousand";
     }
 
+    if (number < 0) {
+      return "negative ${Cardinal(-number)}";
+    }
+
     return "";
   }
 

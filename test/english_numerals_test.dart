@@ -71,6 +71,8 @@ void main() {
         expect(Cardinal(k).toString(), hundreds[k]);
       }
     });
+
+    /// So too are the thousands, with the number of thousands followed by the word "thousand"
     test('perfect thousands', () {
       final thousands = {
         1000: "one thousand",
@@ -85,6 +87,16 @@ void main() {
       };
       for (var k in thousands.keys) {
         expect(Cardinal(k).toString(), thousands[k]);
+      }
+    });
+
+    /// simple negative
+    test('negative', () {
+      final negative = {
+        -1: "negative one",
+      };
+      for (var k in negative.keys) {
+        expect(Cardinal(k).toString(), negative[k]);
       }
     });
   });
