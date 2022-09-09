@@ -59,5 +59,17 @@ void main() {
         expect(Cardinal(k).toString(), someNumbers[k]);
       }
     });
+
+    /// In English, the hundreds are perfectly regular, except that the word hundred remains in its singular form regardless of the number preceding it.
+    test('perfect hundreds', () {
+      final hundreds = {
+        100: "one hundred",
+        200: "two hundred",
+        900: "nine hundred",
+      };
+      for (var k in hundreds.keys) {
+        expect(Cardinal(k).toString(), hundreds[k]);
+      }
+    });
   });
 }

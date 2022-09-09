@@ -48,6 +48,11 @@ class Cardinal {
       return "${Cardinal(tens)}-${Cardinal(number - tens)}";
     }
 
+    // perfect hundreds
+    if (number >= 100 && number < 1000 && number % 100 == 0) {
+      return "${Cardinal(number ~/ 100)} hundred";
+    }
+
     return "";
   }
 
