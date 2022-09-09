@@ -5,6 +5,7 @@ import 'package:test/test.dart';
 /// https://en.wikipedia.org/wiki/English_numerals
 void main() {
   group('Cardinal numbers', () {
+    /// Cardinal numbers refer to the size of a group. In English, these words are numerals
     test('base groups', () {
       // yes, this is basically a copy of the implementation
       final baseNumbers = <int, String>{
@@ -39,6 +40,23 @@ void main() {
       };
       for (var k in baseNumbers.keys) {
         expect(Cardinal(k).toString(), baseNumbers[k]);
+      }
+    });
+
+// If a number is in the range 21 to 99, and the second digit is not zero, the number is typically written as two words separated by a hyphen.
+    test('21 to 99', () {
+      final someNumbers = <int, String>{
+        21: "twenty-one",
+        25: "twenty-five",
+        32: "thirty-two",
+        58: "fifty-eight",
+        64: "sixty-four",
+        79: "seventy-nine",
+        83: "eighty-three",
+        99: "ninety-nine",
+      };
+      for (var k in someNumbers.keys) {
+        expect(Cardinal(k).toString(), someNumbers[k]);
       }
     });
   });

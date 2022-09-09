@@ -37,9 +37,17 @@ class Cardinal {
   Cardinal(this.number);
 
   String get enUs {
+    // basic numbers
     if (_baseNumbers.containsKey(number)) {
       return _baseNumbers[number]!;
     }
+
+    // 20 to 99
+    if (number >= 20 && number < 100) {
+      final tens = (number ~/ 10) * 10;
+      return "${Cardinal(tens)}-${Cardinal(number - tens)}";
+    }
+
     return "";
   }
 
