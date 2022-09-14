@@ -34,11 +34,18 @@ const _baseNumbers = <int, String>{
 class Cardinal {
   final int number;
 
-  Cardinal(this.number);
+  Cardinal(this.number); //: number = BigInt.from(number);
+
+  int get _zero => 0;
+  int get _ten => 10;
+  int get _twenty => 20;
+  int get _hundred => 100;
+  int get _thousand => 1000;
+  int get _million => 1000000;
 
   String get enUs {
     // negatives
-    if (number < 0) {
+    if (number < _zero) {
       return "negative ${Cardinal(-number)}";
     }
 
@@ -48,25 +55,27 @@ class Cardinal {
     }
 
     // 20 to 99
-    if (number >= 20 && number < 100) {
-      final tens = (number ~/ 10) * 10;
+    if (number >= _twenty && number < _hundred) {
+      final tens = (number ~/ _ten) * _ten;
       return "${Cardinal(tens)}-${Cardinal(number - tens)}";
     }
 
     // perfect hundreds
-    else if (number < 1000) {
-      final hundreds = number ~/ 100;
-      final remainder = number % 100;
-      if (remainder == 0) {
+    else if (number < _thousand) {
+      final hundreds = number ~/ _hundred;
+      final remainder = number % _hundred;
+      if (remainder == _zero) {
         return "${Cardinal(hundreds)} hundred";
       } else {
-        return "${Cardinal(hundreds * 100)} ${Cardinal(remainder)}";
+        return "${Cardinal(hundreds * _hundred)} ${Cardinal(remainder)}";
       }
     }
 
     // perfect thousands
-    if (number >= 1000 && number < 1000000 && number % 1000 == 0) {
-      return "${Cardinal(number ~/ 1000)} thousand";
+    if (number >= _thousand &&
+        number < _million &&
+        number % _thousand == _zero) {
+      return "${Cardinal(number ~/ _thousand)} thousand";
     }
 
     throw UnimplementedError('number not implemented $number');
