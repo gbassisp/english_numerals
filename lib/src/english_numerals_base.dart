@@ -37,6 +37,11 @@ class Cardinal {
   Cardinal(this.number);
 
   String get enUs {
+    // negatives
+    if (number < 0) {
+      return "negative ${Cardinal(-number)}";
+    }
+
     // basic numbers
     if (_baseNumbers.containsKey(number)) {
       return _baseNumbers[number]!;
@@ -49,8 +54,14 @@ class Cardinal {
     }
 
     // perfect hundreds
-    if (number >= 100 && number < 1000 && number % 100 == 0) {
-      return "${Cardinal(number ~/ 100)} hundred";
+    else if (number < 1000) {
+      final hundreds = number ~/ 100;
+      final remainder = number % 100;
+      if (remainder == 0) {
+        return "${Cardinal(hundreds)} hundred";
+      } else {
+        return "${Cardinal(hundreds * 100)} ${Cardinal(remainder)}";
+      }
     }
 
     // perfect thousands
@@ -58,11 +69,7 @@ class Cardinal {
       return "${Cardinal(number ~/ 1000)} thousand";
     }
 
-    if (number < 0) {
-      return "negative ${Cardinal(-number)}";
-    }
-
-    return "";
+    throw UnimplementedError('number not implemented $number');
   }
 
   @override

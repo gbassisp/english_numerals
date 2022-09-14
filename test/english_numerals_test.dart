@@ -99,5 +99,15 @@ void main() {
         expect(Cardinal(k).toString(), negative[k]);
       }
     });
+
+    ///
+    test('intermediate numbers', () {
+      final intermediate = {
+        999000: "nine hundred ninety-nine thousand",
+      };
+      for (var k in intermediate.keys) {
+        expect(Cardinal(k).toString(), intermediate[k]);
+      }
+    });
   });
 }
