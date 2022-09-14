@@ -104,6 +104,14 @@ void main() {
     test('intermediate numbers', () {
       final intermediate = {
         999000: "nine hundred ninety-nine thousand",
+        78624365:
+            "seventy-eight million six hundred twenty-four thousand three hundred sixty-five",
+        91921242319:
+            "ninety-one billion nine hundred twenty-one million two hundred forty-two thousand three hundred nineteen",
+        139706537:
+            "one hundred thirty-nine million seven hundred six thousand five hundred thirty-seven",
+        34533372:
+            "thirty-four million five hundred thirty-three thousand three hundred seventy-two",
       };
       for (var k in intermediate.keys) {
         expect(Cardinal(k).toString(), intermediate[k]);
