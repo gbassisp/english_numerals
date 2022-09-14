@@ -32,38 +32,47 @@ const _baseNumbers = <int, String>{
 };
 
 class Cardinal {
-  final int number;
+  final BigInt n;
 
-  Cardinal(this.number); //: number = BigInt.from(number);
+  Cardinal(dynamic number)
+      : n = number is BigInt
+            ? number
+            : number is int
+                ? BigInt.from(number)
+                : number is String
+                    ? BigInt.from(int.parse(number))
+                    : BigInt.from(number);
 
-  int get _zero => 0;
-  int get _ten => 10;
-  int get _twenty => 20;
-  int get _hundred => 100;
-  int get _thousand => 1000;
-  int get _million => 1000000;
+  BigInt get _zero => BigInt.zero;
+  BigInt get _ten => BigInt.from(10);
+  BigInt get _twenty => BigInt.from(20);
+  BigInt get _hundred => BigInt.from(100);
+  BigInt get _thousand => BigInt.from(1000);
+  BigInt get _million => BigInt.from(1000000);
+  int toInt() => n.toInt();
+  bool get isInt => n.isValidInt;
 
   String get enUs {
     // negatives
-    if (number < _zero) {
-      return "negative ${Cardinal(-number)}";
+    if (n < _zero) {
+      return "negative ${Cardinal(-n)}";
     }
 
     // basic numbers
-    if (_baseNumbers.containsKey(number)) {
-      return _baseNumbers[number]!;
+    if (isInt && _baseNumbers.containsKey(toInt())) {
+      return _baseNumbers[toInt()]!;
     }
 
     // 20 to 99
-    if (number >= _twenty && number < _hundred) {
-      final tens = (number ~/ _ten) * _ten;
-      return "${Cardinal(tens)}-${Cardinal(number - tens)}";
+    if (n >= _twenty && n < _hundred) {
+      final tens = (n ~/ _ten) * _ten;
+      return "${Cardinal(tens)}-${Cardinal(n - tens)}";
     }
 
     // perfect hundreds
-    else if (number < _thousand) {
-      final hundreds = number ~/ _hundred;
-      final remainder = number % _hundred;
+    else if (n < _thousand) {
+      final hundreds = n ~/ _hundred;
+      final remainder = n % _hundred;
       if (remainder == _zero) {
         return "${Cardinal(hundreds)} hundred";
       } else {
@@ -72,13 +81,11 @@ class Cardinal {
     }
 
     // perfect thousands
-    if (number >= _thousand &&
-        number < _million &&
-        number % _thousand == _zero) {
-      return "${Cardinal(number ~/ _thousand)} thousand";
+    if (n >= _thousand && n < _million && n % _thousand == _zero) {
+      return "${Cardinal(n ~/ _thousand)} thousand";
     }
 
-    throw UnimplementedError('number not implemented $number');
+    throw UnimplementedError('n not implemented $n');
   }
 
   @override
