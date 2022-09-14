@@ -120,5 +120,17 @@ void main() {
         expect(Cardinal(k).toString(), intermediate[k]);
       }
     });
+
+    /// non-deterministic
+    test('all up to 1 million', () {
+      String previous = '';
+      String current = '';
+      for (int i = 0; i < 1000000; i++) {
+        previous = current;
+        current = Cardinal(i).toString();
+        expect(current.isNotEmpty, true);
+        expect(current, isNot(equals(previous)));
+      }
+    });
   });
 }
