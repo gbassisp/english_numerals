@@ -109,5 +109,16 @@ void main() {
         expect(Cardinal(k).toString(), intermediate[k]);
       }
     });
+
+    ///
+    test('millions', () {
+      final intermediate = {
+        3000000: 'three million',
+        250000000: 'two hundred fifty million',
+      };
+      for (var k in intermediate.keys) {
+        expect(Cardinal(k).toString(), intermediate[k]);
+      }
+    });
   });
 }
