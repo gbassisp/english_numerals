@@ -31,6 +31,30 @@ const _baseNumbers = <int, String>{
   90: "ninety",
 };
 
+const _suffixes = [
+  "thousand",
+  "million",
+  "billion",
+  "trillion",
+  "quadrillion",
+  "quintillion",
+  "sextillion",
+  "septillion",
+  "octillion",
+  "nonillion",
+  "decillion",
+  "undecillion",
+  "duodecillion",
+  "tredecillion",
+  "quattuordecillion",
+  "quindecillion",
+  "sexdecillion",
+  "septendecillion",
+  "octodecillion",
+  "novemdecillion",
+  "vigintillion",
+];
+
 class Cardinal {
   final BigInt n;
 
@@ -48,7 +72,6 @@ class Cardinal {
   BigInt get _twenty => BigInt.from(20);
   BigInt get _hundred => BigInt.from(100);
   BigInt get _thousand => BigInt.from(1000);
-  BigInt get _million => BigInt.from(1000000);
   int toInt() => n.toInt();
   bool get isInt => n.isValidInt;
 
@@ -81,7 +104,20 @@ class Cardinal {
     }
 
     // perfect thousands
-    if (n >= _thousand && n < _million && n % _thousand == _zero) {
+    if (n >= _thousand) {
+      BigInt magnitude = _thousand;
+      BigInt remainder = _thousand;
+      for (String s in _suffixes) {
+        remainder = n % magnitude;
+        if (n < magnitude * _thousand) {
+          String text = "${Cardinal(n ~/ magnitude)} $s";
+          if (remainder != _zero) {
+            text += " ${Cardinal(remainder)}";
+          }
+          return text;
+        }
+        magnitude *= _thousand;
+      }
       return "${Cardinal(n ~/ _thousand)} thousand";
     }
 
