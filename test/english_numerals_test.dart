@@ -142,14 +142,38 @@ void main() {
     });
   });
 
-  test('british hundreds', () {
+  group('project euler test', () {
     const numbers = {
       342: 'three hundred and forty-two',
       115: 'one hundred and fifteen',
     };
 
-    for (var k in numbers.keys) {
-      expect(Cardinal(k).enUk, numbers[k]);
+    int count(String number) {
+      number = number.replaceAll(' ', '').replaceAll('-', '');
+      return number.length;
     }
+
+    test('british hundreds', () {
+      for (var k in numbers.keys) {
+        expect(Cardinal(k).enUk, numbers[k]);
+      }
+    });
+
+    test('british non-deterministic letter counting', () {
+      expect(count(Cardinal(115).enUk), 20);
+      expect(count(Cardinal(342).enUk), 23);
+
+      int c = 0;
+      for (var i = 1; i <= 5; i++) {
+        c += count(Cardinal(i).enUk);
+      }
+      expect(c, 19);
+
+      c = 0;
+      for (var i = 1; i <= 1000; i++) {
+        c += count(Cardinal(i).enUk);
+      }
+      expect(c, 21124);
+    });
   });
 }
