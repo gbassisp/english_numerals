@@ -75,6 +75,18 @@ class Cardinal {
   int toInt() => n.toInt();
   bool get isInt => n.isValidInt;
 
+  String get enUk {
+    if (n > _hundred && n < _thousand) {
+      final hundreds = n ~/ _hundred;
+      final remainder = n % _hundred;
+      if (remainder != _zero) {
+        return "${Cardinal(hundreds * _hundred)} and ${Cardinal(remainder)}";
+      }
+    }
+
+    return enUs;
+  }
+
   String get enUs {
     // negatives
     if (n < _zero) {

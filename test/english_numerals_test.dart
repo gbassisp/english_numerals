@@ -141,4 +141,15 @@ void main() {
       }
     });
   });
+
+  test('british hundreds', () {
+    const numbers = {
+      342: 'three hundred and forty-two',
+      115: 'one hundred and fifteen',
+    };
+
+    for (var k in numbers.keys) {
+      expect(Cardinal(k).enUk, numbers[k]);
+    }
+  });
 }
