@@ -1,7 +1,7 @@
 name: english_numerals
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# homepage: https://www.example.com
+description: A package to convert numbers to their English written form, with null safety and no dependency on flutter.
+version: 0.0.1
+homepage: https://github.com/gbassisp/english_numerals
 
 environment:
   sdk: '>=2.15.0 <3.0.0'
