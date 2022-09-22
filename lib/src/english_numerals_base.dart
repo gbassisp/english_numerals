@@ -78,24 +78,16 @@ class Cardinal {
   int _toInt() => _n.toInt();
   bool get _isInt => _n.isValidInt;
 
-  /// returns the British notation of a cardinal integer
-  String get enUk {
-    if (_n > _hundred && _n < _thousand) {
-      final hundreds = _n ~/ _hundred;
-      final remainder = _n % _hundred;
-      if (remainder != _zero) {
-        return "${Cardinal(hundreds * _hundred)} and ${Cardinal(remainder)}";
-      }
-    }
-
-    return enUs;
-  }
-
   /// returns the American notation of a cardinal integer
   String get enUs {
+    return enUk.replaceAll(" and ", " ");
+  }
+
+  /// returns the British notation of a cardinal integer
+  String get enUk {
     // negatives
     if (_n < _zero) {
-      return "negative ${Cardinal(-_n)}";
+      return "negative ${Cardinal(-_n).enUk}";
     }
 
     // basic numbers
@@ -106,7 +98,7 @@ class Cardinal {
     // 20 to 99
     if (_n >= _twenty && _n < _hundred) {
       final tens = (_n ~/ _ten) * _ten;
-      return "${Cardinal(tens)}-${Cardinal(_n - tens)}";
+      return "${Cardinal(tens).enUk}-${Cardinal(_n - tens).enUk}";
     }
 
     // perfect hundreds
@@ -114,9 +106,9 @@ class Cardinal {
       final hundreds = _n ~/ _hundred;
       final remainder = _n % _hundred;
       if (remainder == _zero) {
-        return "${Cardinal(hundreds)} hundred";
+        return "${Cardinal(hundreds).enUk} hundred";
       } else {
-        return "${Cardinal(hundreds * _hundred)} ${Cardinal(remainder)}";
+        return "${Cardinal(hundreds * _hundred).enUk} and ${Cardinal(remainder).enUk}";
       }
     }
 
@@ -127,9 +119,9 @@ class Cardinal {
       for (String s in _suffixes) {
         remainder = _n % magnitude;
         if (_n < magnitude * _thousand) {
-          String text = "${Cardinal(_n ~/ magnitude)} $s";
+          String text = "${Cardinal(_n ~/ magnitude).enUk} $s";
           if (remainder != _zero) {
-            text += " ${Cardinal(remainder)}";
+            text += " ${Cardinal(remainder).enUk}";
           }
           return text;
         }

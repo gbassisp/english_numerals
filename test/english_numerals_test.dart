@@ -152,8 +152,9 @@ void main() {
       expect(() => u.toString(), isNot(throwsUnimplementedError));
       expect(() => l.toString(), isNot(throwsUnimplementedError));
 
-      print(u);
-      print(l);
+      print(u.enUk);
+      print(l.enUk);
+      print(Cardinal(999).enUk);
     });
 
     /// unimplemeted limit
