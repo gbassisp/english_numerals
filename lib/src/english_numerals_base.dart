@@ -1,5 +1,3 @@
-// TODO: Put public facing types in this file.
-
 const _baseNumbers = <int, String>{
   10: "ten",
   0: "zero",
