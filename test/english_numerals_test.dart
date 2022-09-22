@@ -140,6 +140,33 @@ void main() {
         expect(current, isNot(equals(previous)));
       }
     });
+
+    /// limit
+    test('acceptable extremes', () {
+      String upper = '9' * 66;
+      String lower = '-$upper';
+
+      final u = Cardinal(upper);
+      final l = Cardinal(lower);
+
+      expect(() => u.toString(), isNot(throwsUnimplementedError));
+      expect(() => l.toString(), isNot(throwsUnimplementedError));
+
+      print(u);
+      print(l);
+    });
+
+    /// unimplemeted limit
+    test('unimplemented extremes', () {
+      String upper = '1${'0' * 66}';
+      String lower = '-$upper';
+
+      final u = Cardinal(upper);
+      final l = Cardinal(lower);
+
+      expect(() => u.toString(), throwsUnimplementedError);
+      expect(() => l.toString(), throwsUnimplementedError);
+    });
   });
 
   group('project euler test', () {

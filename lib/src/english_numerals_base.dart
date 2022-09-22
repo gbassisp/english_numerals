@@ -67,7 +67,7 @@ class Cardinal {
             : number is int
                 ? BigInt.from(number)
                 : number is String
-                    ? BigInt.from(int.parse(number))
+                    ? BigInt.parse(number)
                     : BigInt.from(number);
 
   BigInt get _zero => BigInt.zero;
@@ -135,7 +135,6 @@ class Cardinal {
         }
         magnitude *= _thousand;
       }
-      return "${Cardinal(_n ~/ _thousand)} thousand";
     }
 
     throw UnimplementedError('n not implemented $_n');
