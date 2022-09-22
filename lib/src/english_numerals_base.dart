@@ -55,6 +55,9 @@ const _suffixes = [
   "vigintillion",
 ];
 
+/// A class that takes an integer number on its constructor and represents its
+/// cardinal form on toString() method. Defaults to US notation, but enUs and
+/// enUk getters can be used to specify locale.
 class Cardinal {
   final BigInt n;
 
@@ -75,6 +78,7 @@ class Cardinal {
   int toInt() => n.toInt();
   bool get isInt => n.isValidInt;
 
+  /// returns the British notation of a cardinal integer
   String get enUk {
     if (n > _hundred && n < _thousand) {
       final hundreds = n ~/ _hundred;
@@ -87,6 +91,7 @@ class Cardinal {
     return enUs;
   }
 
+  /// returns the American notation of a cardinal integer
   String get enUs {
     // negatives
     if (n < _zero) {
