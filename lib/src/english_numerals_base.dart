@@ -59,10 +59,10 @@ const _suffixes = [
 /// cardinal form on toString() method. Defaults to US notation, but enUs and
 /// enUk getters can be used to specify locale.
 class Cardinal {
-  final BigInt n;
+  final BigInt _n;
 
   Cardinal(dynamic number)
-      : n = number is BigInt
+      : _n = number is BigInt
             ? number
             : number is int
                 ? BigInt.from(number)
@@ -75,14 +75,14 @@ class Cardinal {
   BigInt get _twenty => BigInt.from(20);
   BigInt get _hundred => BigInt.from(100);
   BigInt get _thousand => BigInt.from(1000);
-  int toInt() => n.toInt();
-  bool get isInt => n.isValidInt;
+  int _toInt() => _n.toInt();
+  bool get _isInt => _n.isValidInt;
 
   /// returns the British notation of a cardinal integer
   String get enUk {
-    if (n > _hundred && n < _thousand) {
-      final hundreds = n ~/ _hundred;
-      final remainder = n % _hundred;
+    if (_n > _hundred && _n < _thousand) {
+      final hundreds = _n ~/ _hundred;
+      final remainder = _n % _hundred;
       if (remainder != _zero) {
         return "${Cardinal(hundreds * _hundred)} and ${Cardinal(remainder)}";
       }
@@ -94,25 +94,25 @@ class Cardinal {
   /// returns the American notation of a cardinal integer
   String get enUs {
     // negatives
-    if (n < _zero) {
-      return "negative ${Cardinal(-n)}";
+    if (_n < _zero) {
+      return "negative ${Cardinal(-_n)}";
     }
 
     // basic numbers
-    if (isInt && _baseNumbers.containsKey(toInt())) {
-      return _baseNumbers[toInt()]!;
+    if (_isInt && _baseNumbers.containsKey(_toInt())) {
+      return _baseNumbers[_toInt()]!;
     }
 
     // 20 to 99
-    if (n >= _twenty && n < _hundred) {
-      final tens = (n ~/ _ten) * _ten;
-      return "${Cardinal(tens)}-${Cardinal(n - tens)}";
+    if (_n >= _twenty && _n < _hundred) {
+      final tens = (_n ~/ _ten) * _ten;
+      return "${Cardinal(tens)}-${Cardinal(_n - tens)}";
     }
 
     // perfect hundreds
-    else if (n < _thousand) {
-      final hundreds = n ~/ _hundred;
-      final remainder = n % _hundred;
+    else if (_n < _thousand) {
+      final hundreds = _n ~/ _hundred;
+      final remainder = _n % _hundred;
       if (remainder == _zero) {
         return "${Cardinal(hundreds)} hundred";
       } else {
@@ -121,13 +121,13 @@ class Cardinal {
     }
 
     // perfect thousands
-    if (n >= _thousand) {
+    if (_n >= _thousand) {
       BigInt magnitude = _thousand;
       BigInt remainder = _thousand;
       for (String s in _suffixes) {
-        remainder = n % magnitude;
-        if (n < magnitude * _thousand) {
-          String text = "${Cardinal(n ~/ magnitude)} $s";
+        remainder = _n % magnitude;
+        if (_n < magnitude * _thousand) {
+          String text = "${Cardinal(_n ~/ magnitude)} $s";
           if (remainder != _zero) {
             text += " ${Cardinal(remainder)}";
           }
@@ -135,10 +135,10 @@ class Cardinal {
         }
         magnitude *= _thousand;
       }
-      return "${Cardinal(n ~/ _thousand)} thousand";
+      return "${Cardinal(_n ~/ _thousand)} thousand";
     }
 
-    throw UnimplementedError('n not implemented $n');
+    throw UnimplementedError('n not implemented $_n');
   }
 
   @override
