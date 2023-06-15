@@ -134,4 +134,12 @@ class Cardinal {
   String toString() {
     return enUs;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Cardinal && runtimeType == other.runtimeType && _n == other._n;
+
+  @override
+  int get hashCode => _n.hashCode;
 }

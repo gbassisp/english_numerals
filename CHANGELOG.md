@@ -1,3 +1,8 @@
+
+## 0.1.0
+
+- Implement equality
+
 ## 0.0.1
 
 Initial version, including:

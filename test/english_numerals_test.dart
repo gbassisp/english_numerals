@@ -203,5 +203,17 @@ void main() {
       }
       expect(c, 21124);
     });
+
+    test('equality', () {
+      for (var i = 1; i <= 10000000; i++) {
+        final s = i.toString();
+        final d = double.parse(s);
+        final n = num.parse(s);
+        final b = BigInt.from(i);
+        expect(Cardinal(i), Cardinal(d));
+        expect(Cardinal(i), Cardinal(n));
+        expect(Cardinal(i), Cardinal(b));
+      }
+    });
   });
 }
