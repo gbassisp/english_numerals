@@ -1,72 +1,76 @@
+import 'package:meta/meta.dart';
+
 const _baseNumbers = <int, String>{
-  10: "ten",
-  0: "zero",
-  1: "one",
-  11: "eleven",
-  2: "two",
-  12: "twelve",
-  20: "twenty",
-  3: "three",
-  13: "thirteen",
-  30: "thirty",
-  4: "four",
-  14: "fourteen",
-  40: "forty",
-  5: "five",
-  15: "fifteen",
-  50: "fifty",
-  6: "six",
-  16: "sixteen",
-  60: "sixty",
-  7: "seven",
-  17: "seventeen",
-  70: "seventy",
-  8: "eight",
-  18: "eighteen",
-  80: "eighty",
-  9: "nine",
-  19: "nineteen",
-  90: "ninety",
+  10: 'ten',
+  0: 'zero',
+  1: 'one',
+  11: 'eleven',
+  2: 'two',
+  12: 'twelve',
+  20: 'twenty',
+  3: 'three',
+  13: 'thirteen',
+  30: 'thirty',
+  4: 'four',
+  14: 'fourteen',
+  40: 'forty',
+  5: 'five',
+  15: 'fifteen',
+  50: 'fifty',
+  6: 'six',
+  16: 'sixteen',
+  60: 'sixty',
+  7: 'seven',
+  17: 'seventeen',
+  70: 'seventy',
+  8: 'eight',
+  18: 'eighteen',
+  80: 'eighty',
+  9: 'nine',
+  19: 'nineteen',
+  90: 'ninety',
 };
 
 const _suffixes = [
-  "thousand",
-  "million",
-  "billion",
-  "trillion",
-  "quadrillion",
-  "quintillion",
-  "sextillion",
-  "septillion",
-  "octillion",
-  "nonillion",
-  "decillion",
-  "undecillion",
-  "duodecillion",
-  "tredecillion",
-  "quattuordecillion",
-  "quindecillion",
-  "sexdecillion",
-  "septendecillion",
-  "octodecillion",
-  "novemdecillion",
-  "vigintillion",
+  'thousand',
+  'million',
+  'billion',
+  'trillion',
+  'quadrillion',
+  'quintillion',
+  'sextillion',
+  'septillion',
+  'octillion',
+  'nonillion',
+  'decillion',
+  'undecillion',
+  'duodecillion',
+  'tredecillion',
+  'quattuordecillion',
+  'quindecillion',
+  'sexdecillion',
+  'septendecillion',
+  'octodecillion',
+  'novemdecillion',
+  'vigintillion',
 ];
 
 /// A class that takes an integer number on its constructor and represents its
 /// cardinal form on toString() method. Defaults to US notation, but enUs and
 /// enUk getters can be used to specify locale.
+@immutable
 class Cardinal {
-  final BigInt _n;
-
-  Cardinal(dynamic number)
+  /// default constructor for Cardinal, taking any type and converting to
+  /// BigInt internally
+  Cardinal(Object? number)
       : _n = number is BigInt
             ? number
             : number is int
                 ? BigInt.from(number)
-                : number is String
-                    ? BigInt.parse(number)
-                    : BigInt.from(number);
+                : number is num
+                    ? BigInt.from(number)
+                    : BigInt.parse(number.toString());
+  final BigInt _n;
 
   BigInt get _zero => BigInt.zero;
   BigInt get _ten => BigInt.from(10);
@@ -78,14 +82,14 @@ class Cardinal {
 
   /// returns the American notation of a cardinal integer
   String get enUs {
-    return enUk.replaceAll(" and ", " ");
+    return enUk.replaceAll(' and ', ' ');
   }
 
   /// returns the British notation of a cardinal integer
   String get enUk {
     // negatives
     if (_n < _zero) {
-      return "negative ${Cardinal(-_n).enUk}";
+      return 'negative ${Cardinal(-_n).enUk}';
     }
 
     // basic numbers
@@ -96,7 +100,7 @@ class Cardinal {
     // 20 to 99
     if (_n >= _twenty && _n < _hundred) {
       final tens = (_n ~/ _ten) * _ten;
-      return "${Cardinal(tens).enUk}-${Cardinal(_n - tens).enUk}";
+      return '${Cardinal(tens).enUk}-${Cardinal(_n - tens).enUk}';
     }
 
     // perfect hundreds
@@ -104,22 +108,23 @@ class Cardinal {
       final hundreds = _n ~/ _hundred;
       final remainder = _n % _hundred;
       if (remainder == _zero) {
-        return "${Cardinal(hundreds).enUk} hundred";
+        return '${Cardinal(hundreds).enUk} hundred';
       } else {
-        return "${Cardinal(hundreds * _hundred).enUk} and ${Cardinal(remainder).enUk}";
+        return '${Cardinal(hundreds * _hundred).enUk} and '
+            '${Cardinal(remainder).enUk}';
       }
     }
 
     // perfect thousands
     if (_n >= _thousand) {
-      BigInt magnitude = _thousand;
-      BigInt remainder = _thousand;
-      for (String s in _suffixes) {
+      var magnitude = _thousand;
+      var remainder = _thousand;
+      for (final s in _suffixes) {
         remainder = _n % magnitude;
         if (_n < magnitude * _thousand) {
-          String text = "${Cardinal(_n ~/ magnitude).enUk} $s";
+          var text = '${Cardinal(_n ~/ magnitude).enUk} $s';
           if (remainder != _zero) {
-            text += " ${Cardinal(remainder).enUk}";
+            text += ' ${Cardinal(remainder).enUk}';
           }
           return text;
         }
