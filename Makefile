@@ -62,6 +62,11 @@ analyze:
 	$(DART_CMD) analyze --fatal-infos --fatal-warnings
 	$(DART_CMD) format --set-exit-if-changed .
 
+.PHONY: fix
+fix:
+	@echo "Fixing issues..."
+	$(DART_CMD) fix --apply
+
 .PHONY: version
 version:
 	@echo "Checking version..."
