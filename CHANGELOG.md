@@ -1,4 +1,8 @@
 
+## 1.0.1
+
+- Ensure `Cardinal()` doesn't accept garbage and default to `zero`
+
 ## 1.0.0
 
 - Stable version release. No changes to functionality
