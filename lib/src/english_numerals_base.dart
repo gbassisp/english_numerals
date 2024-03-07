@@ -31,6 +31,10 @@ const _baseNumbers = <int, String>{
   90: 'ninety',
 };
 
+final Map<String, int> _reverseMappedNumbers = {
+  for (final e in _baseNumbers.entries) e.value: e.key,
+};
+
 const _suffixes = [
   'thousand',
   'million',
@@ -53,7 +57,26 @@ const _suffixes = [
   'octodecillion',
   'novemdecillion',
   'vigintillion',
+  // TODO(gbassisp): check validity and enable greater range:
+  // 'unvigintillion',
+  // 'duovigintillion',
+  // 'trigintillion',
+  // 'quadragintillion',
+  // 'quinquagintillion',
+  // 'sesquagintillion',
+  // 'septuagintillion',
+  // 'octogintillion',
+  // 'nonagintillion',
 ];
+
+final _knownKeywords = <String>{
+  ..._suffixes,
+  ..._baseNumbers.values,
+  'hundred',
+  'negative',
+};
+
+BigInt get _thousand => BigInt.from(1000);
 
 /// A class that takes an integer number on its constructor and represents its
 /// cardinal form on toString() method. Defaults to US notation, but enUs and
@@ -69,14 +92,15 @@ class Cardinal {
                 ? BigInt.from(number)
                 : number is num
                     ? BigInt.from(number)
-                    : BigInt.parse(number.toString());
+                    : BigInt.tryParse(number.toString()) ??
+                        _cardinalToBigInt(number.toString());
+
   final BigInt _n;
 
   BigInt get _zero => BigInt.zero;
   BigInt get _ten => BigInt.from(10);
   BigInt get _twenty => BigInt.from(20);
   BigInt get _hundred => BigInt.from(100);
-  BigInt get _thousand => BigInt.from(1000);
   int _toInt() => _n.toInt();
   bool get _isInt => _n.isValidInt;
 
@@ -147,4 +171,75 @@ class Cardinal {
 
   @override
   int get hashCode => _n.hashCode;
+}
+
+BigInt _cardinalToBigInt(String text) {
+  var t = text
+      .toLowerCase()
+      .replaceAll(' and ', ' ')
+      .replaceAll('-', ' ')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+
+  // var res = BigInt.zero;
+  final negative = t.contains('negative');
+  t = t.replaceAll('negative', '').replaceAll(RegExp(r'\s+'), ' ').trim();
+
+  var keywords = t.split(' ');
+  assert(
+    () {
+      for (final kw in keywords) {
+        if (!_knownKeywords.contains(kw)) {
+          return false;
+        }
+      }
+
+      return true;
+    }(),
+    'Unknown keyword in $text',
+  );
+
+  if (_reverseMappedNumbers.containsKey(t)) {
+    return BigInt.from(
+      negative ? -_reverseMappedNumbers[t]! : _reverseMappedNumbers[t]!,
+    );
+  }
+
+  BigInt getUpToThousand(List<String> keywords) {
+    var runningSum = 0;
+    if (keywords.contains('hundred')) {
+      runningSum += _reverseMappedNumbers[keywords.first]! * 100;
+      keywords.removeAt(0);
+    }
+
+    for (final kw in keywords) {
+      if (_reverseMappedNumbers.containsKey(kw)) {
+        runningSum += _reverseMappedNumbers[kw]!;
+      }
+    }
+
+    return BigInt.from(runningSum);
+  }
+
+  var res = BigInt.zero;
+  for (var i = _suffixes.length - 1; i >= 0; i--) {
+    final suf = _suffixes[i];
+    if (keywords.contains(suf)) {
+      final idx = keywords.indexOf(suf);
+      final kws = keywords.sublist(0, idx);
+      keywords = keywords.sublist(idx)..removeAt(0);
+      // if (keywords.contains('thousand')) {
+      //   print('$keywords $res');
+      // }
+      final magnitude = _thousand.pow(i + 1);
+      final value = getUpToThousand(kws);
+      res += value * magnitude;
+    }
+  }
+
+  res += getUpToThousand(keywords);
+  res = res.abs();
+  res = negative ? -res : res;
+
+  return res;
 }
