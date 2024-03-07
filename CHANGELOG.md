@@ -1,4 +1,9 @@
 
+## 0.2.0
+
+- Added support for creating a `Cardinal()` from a cardinal text, e.g., `Cardinal('one thousand')`
+- Added `toInt()` and `toBigInt()` on `Cardinal`
+
 ## 0.1.1
 
 - Fix static analysis
