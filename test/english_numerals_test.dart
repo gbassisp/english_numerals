@@ -211,6 +211,10 @@ void main() {
       expect(c, 21124);
     });
 
+    test('invalid text', () {
+      expect(() => Cardinal('invalid value'), throwsAnything);
+    });
+
     test('number from text', () {
       // all between -1e6 to 1e6
       for (final i in range(1e6)) {
@@ -293,3 +297,4 @@ Iterable<int> range(num iterations) sync* {
 }
 
 final Matcher throwsError = throwsA(isA<Error>());
+final Matcher throwsAnything = throwsA(isA<Object?>());

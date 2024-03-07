@@ -198,18 +198,11 @@ BigInt _cardinalToBigInt(String text) {
   t = t.replaceAll('negative', '').replaceAll(RegExp(r'\s+'), ' ').trim();
 
   var keywords = t.split(' ');
-  assert(
-    () {
-      for (final kw in keywords) {
-        if (!_knownKeywords.contains(kw)) {
-          return false;
-        }
-      }
-
-      return true;
-    }(),
-    'Unknown keyword in $text',
-  );
+  for (final kw in keywords) {
+    if (!_knownKeywords.contains(kw)) {
+      throw StateError('Unknown word $kw. Perhaps not yet supported?');
+    }
+  }
 
   if (_reverseMappedNumbers.containsKey(t)) {
     return BigInt.from(
