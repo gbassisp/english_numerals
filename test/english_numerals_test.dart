@@ -241,6 +241,21 @@ void main() {
         recast = Cardinal(neg.enUs);
         expect(neg, recast);
       }
+
+      for (final _ in range(1e3)) {
+        final i = Random().nextInt(1 << 32).abs();
+        final pos = Cardinal(Cardinal(i));
+        var recast = Cardinal(Cardinal(pos.enUk));
+        expect(pos, recast);
+        recast = Cardinal(Cardinal(pos.enUs));
+        expect(pos, recast);
+
+        final neg = Cardinal(Cardinal(-i));
+        recast = Cardinal(Cardinal(neg.enUk));
+        expect(neg, recast);
+        recast = Cardinal(Cardinal(neg.enUs));
+        expect(neg, recast);
+      }
     });
 
     test('toInt throws if too big', () {
