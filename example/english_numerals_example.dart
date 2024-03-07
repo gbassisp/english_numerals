@@ -12,4 +12,9 @@ void main() {
   print(other.enUk); // "nine hundred and ninety-nine"
   print(other.enUs); // "nine hundred ninety-nine"
   print(other); // "nine hundred ninety-nine"
+
+  final uk = Cardinal('nine hundred and ninety-nine');
+  print(uk.toInt()); // "999"
+  final us = Cardinal('nine hundred ninety-nine');
+  print(us.toInt()); // "999"
 }

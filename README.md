@@ -15,11 +15,12 @@ Simple package to transform numbers into English numerals without flutter depend
 
 ## Features
 
-Only integer cardinals are currently available, in the non-inclusive range ]-10^66, 10^66[
+Only integer cardinals are currently available, in the non-inclusive range `]-10^66, 10^66[`
 
 
 ## Usage
  
+It can be used to create a `Cardinal` number from `int` or `BigInt`:
 
 ```dart
 final other = Cardinal(999);
@@ -27,3 +28,13 @@ print(other.enUk); // "nine hundred and ninety-nine"
 print(other.enUs); // "nine hundred ninety-nine"
 print(other.toString()); // "nine hundred ninety-nine"
 ```
+
+It can also be used the other way around to convert cardinal text to int and BigInt:
+
+```dart
+final uk = Cardinal("nine hundred and ninety-nine");
+print(uk.toInt()); // "999"
+final us = Cardinal("nine hundred ninety-nine");
+print(us.toInt()); // "999"
+```
+<!-- https://pub.dev/packages/english_numerals/versions/0.2.0 -->

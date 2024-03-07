@@ -1,4 +1,8 @@
 
+## 0.2.1
+
+- Added missing documentation on new feature
+
 ## 0.2.0
 
 - Added support for creating a `Cardinal()` from a cardinal text, e.g., `Cardinal('one thousand')`
