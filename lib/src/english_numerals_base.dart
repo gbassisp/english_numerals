@@ -104,6 +104,18 @@ class Cardinal {
   int _toInt() => _n.toInt();
   bool get _isInt => _n.isValidInt;
 
+  /// returns the BigInt value of this
+  BigInt toBigInt() => _n;
+
+  /// returns the integer value of this. Throws if number is too big for integer
+  int toInt() {
+    if (_n.isValidInt) {
+      return _toInt();
+    }
+
+    throw RangeError('$_n cannot be cast to integer. Use toBigInt() instead');
+  }
+
   /// returns the American notation of a cardinal integer
   String get enUs {
     return enUk.replaceAll(' and ', ' ');

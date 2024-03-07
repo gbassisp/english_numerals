@@ -243,6 +243,17 @@ void main() {
       }
     });
 
+    test('toInt throws if too big', () {
+      final bigCardinal = Cardinal('one vigintillion');
+      final bigInt = (bigCardinal.toBigInt() * BigInt.from(1000)) - BigInt.one;
+      final biggerCardinal = Cardinal(bigInt);
+
+      // very big number converges
+      expect(biggerCardinal.enUk, isNotEmpty);
+      // toInt() throws
+      expect(biggerCardinal.toInt, throwsError);
+    });
+
     test('equality', () {
       for (var i = 1; i <= 10000000; i++) {
         final s = i.toString();
@@ -265,3 +276,5 @@ Iterable<int> range(num iterations) sync* {
     yield i;
   }
 }
+
+final Matcher throwsError = throwsA(isA<Error>());
