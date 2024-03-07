@@ -1,6 +1,6 @@
 name: english_numerals
 description: A package to convert numbers to and from their English written form, with null safety and no dependency on flutter.
-version: 0.2.1
+version: 1.0.0
 homepage: https://github.com/gbassisp/english_numerals
 
 environment:

@@ -1,4 +1,8 @@
 
+## 1.0.0
+
+- Stable version release. No changes to functionality
+
 ## 0.2.1
 
 - Added missing documentation on new feature
