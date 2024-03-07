@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:english_numerals/english_numerals.dart';
 import 'package:test/test.dart';
 
@@ -209,6 +211,38 @@ void main() {
       expect(c, 21124);
     });
 
+    test('number from text', () {
+      // all between -1e6 to 1e6
+      for (final i in range(1e6)) {
+        final pos = Cardinal(i);
+        var recast = Cardinal(pos.enUk);
+        expect(recast, pos);
+        recast = Cardinal(pos.enUs);
+        expect(recast, pos);
+
+        final neg = Cardinal(-i);
+        recast = Cardinal(neg.enUk);
+        expect(recast, neg);
+        recast = Cardinal(neg.enUs);
+        expect(recast, neg);
+      }
+
+      for (final _ in range(1e6)) {
+        final i = Random().nextInt(1 << 32).abs();
+        final pos = Cardinal(i);
+        var recast = Cardinal(pos.enUk);
+        expect(pos, recast);
+        recast = Cardinal(pos.enUs);
+        expect(pos, recast);
+
+        final neg = Cardinal(-i);
+        recast = Cardinal(neg.enUk);
+        expect(neg, recast);
+        recast = Cardinal(neg.enUs);
+        expect(neg, recast);
+      }
+    });
+
     test('equality', () {
       for (var i = 1; i <= 10000000; i++) {
         final s = i.toString();
@@ -221,4 +255,13 @@ void main() {
       }
     });
   });
+}
+
+Iterable<int> range(num iterations) sync* {
+  assert(iterations >= 0, 'only non-negatives allowed');
+  final limit = iterations.toInt().abs();
+
+  for (var i = 0; i < limit; i++) {
+    yield i;
+  }
 }
