@@ -1,18 +1,11 @@
 
 ## 1.0.1
 
-- Ensure `Cardinal()` doesn't accept garbage and default to `zero`
-
-## 1.0.0
-
 - Stable version release. No changes to functionality
 
-## 0.2.1
+## 0.2.2
 
-- Added missing documentation on new feature
-
-## 0.2.0
-
+- Ensure `Cardinal()` doesn't accept garbage and default to `zero`
 - Added support for creating a `Cardinal()` from a cardinal text, e.g., `Cardinal('one thousand')`
 - Added `toInt()` and `toBigInt()` on `Cardinal`
 
