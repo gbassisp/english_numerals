@@ -4,3 +4,4 @@
 library english_numerals;
 
 export 'src/english_numerals_base.dart';
+export 'src/functions.dart';
