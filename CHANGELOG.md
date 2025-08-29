@@ -1,4 +1,8 @@
 
+## 1.1.0
+
+- Added top-level functions `convertToCardinal` and `parseCardinal`
+
 ## 1.0.1
 
 - Stable version release. No changes to functionality

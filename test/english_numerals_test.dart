@@ -285,6 +285,44 @@ void main() {
       }
     });
   });
+
+  group('Top-level functions', () {
+    test('convertToCardinal', () {
+      expect(convertToCardinal(10), 'ten');
+      expect(convertToCardinal(21), 'twenty-one');
+      expect(convertToCardinal(100), 'one hundred');
+      expect(convertToCardinal(123), 'one hundred twenty-three');
+
+      // double
+      expect(convertToCardinal(10.0), 'ten');
+      // BigInt
+      expect(convertToCardinal(BigInt.from(21)), 'twenty-one');
+      // String
+      expect(convertToCardinal('100'), 'one hundred');
+      // String cardinal
+      expect(convertToCardinal('one hundred'), 'one hundred');
+      // Cardinal
+      expect(convertToCardinal(Cardinal(10)), 'ten');
+    });
+
+    test('parseCardinal', () {
+      expect(parseCardinal('ten'), BigInt.from(10));
+      expect(parseCardinal('twenty-one'), BigInt.from(21));
+      expect(parseCardinal('one hundred'), BigInt.from(100));
+      expect(parseCardinal('one hundred twenty-three'), BigInt.from(123));
+
+      // double
+      expect(parseCardinal(10.0), BigInt.from(10));
+      // BigInt
+      expect(parseCardinal(BigInt.from(21)), BigInt.from(21));
+      // String
+      expect(parseCardinal('100'), BigInt.from(100));
+      // String cardinal
+      expect(parseCardinal('one hundred'), BigInt.from(100));
+      // Cardinal
+      expect(parseCardinal(Cardinal(10)), BigInt.from(10));
+    });
+  });
 }
 
 Iterable<int> range(num iterations) sync* {
