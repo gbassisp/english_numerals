@@ -13,12 +13,22 @@ and the Flutter guide for
 
 Simple package to transform numbers into English numerals without flutter dependency and with null safety, as opposed to other obsolete packages.
 
+
 ## Features
 
-Only integer cardinals are currently available, in the non-inclusive range `]-10^66, 10^66[`
-
+- Top-level functions `convertToCardinal` and `parseCardinal`
+- `Cardinal` class that takes any integer, BigInt, Cardinal, etc... on its constructor and can output the English written form of that number.
 
 ## Usage
+ 
+Simple usage with the top-level functions:
+```dart
+print(convertToCardinal(999)) // "nine hundred ninety-nine"
+
+// reads both US and UK forms
+print(parseCardinal("nine hundred ninety-nine")) // 999
+print(parseCardinal("nine hundred and ninety-nine")) // 999
+```
  
 It can be used to create a `Cardinal` number from `int` or `BigInt`:
 
